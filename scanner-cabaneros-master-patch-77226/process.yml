@@ -1,0 +1,18 @@
+apps:
+  - script   : './main.js'
+    name     : 'scanner'
+    instances: 1
+    exec_mode: "fork"
+    watch: true
+    ignore_watch: ['\logs']
+    error_file: 'logs/err_Bot.log'
+    out_file: 'logs/app_Bot.log'
+    log_date_format : "DD-MM-YYYY HH:mm Z"
+
+    env:      
+      # -------------------- READ-ONLY --------------------
+      config: soccer
+      socketIp: http://80.209.233.42
+      socketUsername: user1
+      socketPassword: 5rSR6pTt79Ps1
+      redisHost: redis

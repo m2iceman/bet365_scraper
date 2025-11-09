@@ -1,0 +1,59 @@
+version: "3"
+services:
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379"
+  # surfshark:
+  #     image: ilteoood/docker-surfshark
+  #     restart: always
+  #     container_name: surfshark
+  #     environment: 
+  #         - SURFSHARK_USER=SxWEaZYCNy9wsU5nkhpupRDy
+  #         - SURFSHARK_PASSWORD=DZC6cztn6YnBKJa2gJ8DCJVJ
+  #         - SURFSHARK_COUNTRY=alb
+  #         - SURFSHARK_CITY=tia
+  #         - CONNECTION_TYPE=udp
+  #         - LAN_NETWORK=
+  #     cap_add: 
+  #         - NET_ADMIN
+  #     devices:
+  #         - /dev/net/tun
+  #     dns:
+  #         - 1.1.1.1
+  scanner:
+    build: .
+    logging:
+        driver: "json-file"
+        options:
+            max-file: "5"
+            max-size: "200m"
+    container_name: scanner
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:chrome.json
+    shm_size: 1gb
+    restart: always
+    depends_on:
+      - redis
+      - surfshark
+    volumes:
+        - "/src/node_modules"
+        - "./process.yml:/srv/process.yml"            
+    network_mode: service:surfshark
+
+
+
+
+
+
+
+
+
+
+
+
+
+
